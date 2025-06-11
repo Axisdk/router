@@ -1,0 +1,107 @@
+<div class="routers-table">
+  <div class="wrapper">
+    <h2 class="title">{{ title }}</h2>
+
+    @if (!isLoading()) {
+      <table class="table">
+        <thead class="table-head">
+        <tr class="table-row">
+          <th class="table-column">
+            <div class="sort" (click)="sortRoutersBy(routerSortEnum.UUID)">
+              <span class="text">UUID</span>
+              <img class="icon"
+                   [class.active]="currentSort.field === routerSortEnum.UUID && currentSort.direction === sortEnum.DESC"
+                   src="images/icons/chevron.svg"
+                   alt="chevron"
+              >
+            </div>
+          </th>
+          <th class="table-column">
+            <div class="sort" (click)="sortRoutersBy(routerSortEnum.ADDRESS)">
+              <span class="text">Address</span>
+              <img class="icon"
+                   [class.active]="currentSort.field === routerSortEnum.ADDRESS && currentSort.direction === sortEnum.DESC"
+                   src="images/icons/chevron.svg"
+                   alt="chevron"
+              >
+            </div>
+          </th>
+          <th class="table-column">
+            <div class="sort" (click)="sortRoutersBy(routerSortEnum.MASK)">
+              <span class="text">Mask</span>
+              <img class="icon"
+                   [class.active]="currentSort.field === routerSortEnum.MASK && currentSort.direction === sortEnum.DESC"
+                   src="images/icons/chevron.svg"
+                   alt="chevron">
+            </div>
+          </th>
+          <th class="table-column">
+            <div class="sort" (click)="sortRoutersBy(routerSortEnum.GATEWAY)">
+              <span class="text">Gateway</span>
+              <img class="icon"
+                   [class.active]="currentSort.field === routerSortEnum.GATEWAY && currentSort.direction === sortEnum.DESC"
+                   src="images/icons/chevron.svg"
+                   alt="chevron">
+            </div>
+          </th>
+          <th class="table-column">
+            <div class="sort" (click)="sortRoutersBy(routerSortEnum.INTERFACE)">
+              <span class="text">Interface</span>
+              <img class="icon"
+                   [class.active]="currentSort.field === routerSortEnum.INTERFACE && currentSort.direction === sortEnum.DESC"
+                   src="images/icons/chevron.svg"
+                   alt="chevron">
+            </div>
+          </th>
+        </tr>
+        </thead>
+        <tbody class="table-body">
+          @for (route of routers(); track route.uuid) {
+            <tr class="table-row">
+              <td class="table-column"><span class="text">{{ route.uuid }}</span></td>
+              <td class="table-column"><span class="text">{{ addCidrToAddresses(route) }}</span></td>
+              <td class="table-column"><span class="text">{{ route.mask }}</span></td>
+              <td class="table-column"><span class="text">{{ route.gateway }}</span></td>
+              <td class="table-column"><span class="text">{{ route.interface }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (hasMoreRouters()) {
+        <div class="btn-wrapper">
+          <button class="btn" (click)="viewMoreRouters()" [disabled]="isLoadingButton()">
+            <span class="btn-text">Показать ещё</span>
+            @if (isLoadingButton()) {
+              <span class="loader"></span>
+            }
+          </button>
+        </div>
+      }
+    } @else {
+      <table class="table">
+        <thead class="table-head">
+        <tr class="table-row">
+          <th class="table-column"><div class="skeleton"></div></th>
+          <th class="table-column"><div class="skeleton"></div></th>
+          <th class="table-column"><div class="skeleton"></div></th>
+          <th class="table-column"><div class="skeleton"></div></th>
+          <th class="table-column"><div class="skeleton"></div></th>
+        </tr>
+        </thead>
+        <tbody class="table-body">
+          @for (item of [0, 1, 2, 3, 4]; track item) {
+            <tr class="table-row">
+              <td class="table-column"><div class="skeleton"></div></td>
+              <td class="table-column"><div class="skeleton"></div></td>
+              <td class="table-column"><div class="skeleton"></div></td>
+              <td class="table-column"><div class="skeleton"></div></td>
+              <td class="table-column"><div class="skeleton"></div></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>
+
+
